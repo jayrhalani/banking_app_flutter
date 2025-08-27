@@ -1,0 +1,39 @@
+name: banking_app_flutter
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+
+  fonts:
+    - family: Saira
+      fonts:
+        - asset: assets/fonts/saira_regular.ttf
+          weight: 400
+        - asset: assets/fonts/saira_bold.ttf
+          weight: 700
+        - asset: assets/fonts/saira_italic.ttf
+          style: italic
+        - asset: assets/fonts/saira_bold_italic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/saira_semi_bold.ttf
+          weight: 600
