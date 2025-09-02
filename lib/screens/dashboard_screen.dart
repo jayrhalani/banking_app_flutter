@@ -1,5 +1,6 @@
 import 'package:banking_app_flutter/screens/home_screen.dart';
 import 'package:banking_app_flutter/screens/placeholder_page.dart';
+import 'package:banking_app_flutter/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -17,8 +18,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const PlaceholderPage(title: 'Map', icon: Icons.map_outlined),
     const PlaceholderPage(title: 'Transfer', icon: Icons.swap_horiz),
     const PlaceholderPage(title: 'Settings', icon: Icons.settings_outlined),
-    const PlaceholderPage(title: 'Profile', icon: Icons.person),
-    // const ProfilePage(),
+    const ProfilePage(),
   ];
 
   @override
