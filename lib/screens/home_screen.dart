@@ -1,4 +1,5 @@
 import 'package:banking_app_flutter/resources/asset_res.dart';
+import 'package:banking_app_flutter/screens/add_money_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -89,21 +90,23 @@ class _HomePageState extends State<HomePage> {
           ),
           Container(
             decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Color(0XFFE6E7E9), width: 2),
             ),
-            padding: EdgeInsets.all(8),
+            width: 48,
+            height: 48,
             child: Stack(
               children: [
-                const Icon(
-                  Icons.notifications_outlined,
-                  size: 32,
-                  color: Colors.black,
+                Center(
+                  child: const Icon(
+                    Icons.notifications_outlined,
+                    size: 28,
+                    color: Colors.black,
+                  ),
                 ),
                 Positioned(
-                  right: 0,
-                  top: 1,
+                  right: 8,
+                  top: 10,
                   child: Container(
                     width: 10,
                     height: 10,
@@ -181,7 +184,12 @@ class _HomePageState extends State<HomePage> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // TODO - Open Add Money screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddMoneyScreen(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0XFF202020),
