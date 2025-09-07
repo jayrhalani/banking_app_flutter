@@ -1,6 +1,7 @@
 import 'package:banking_app_flutter/resources/asset_res.dart';
 import 'package:banking_app_flutter/screens/add_money_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:banking_app_flutter/models/card_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,23 +13,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isBalanceVisible = true;
 
-  final List<Map<String, dynamic>> _cards = [
-    {
-      'isPrimary': true,
-      'type': 'Debit Card',
-      'number': '4568',
-      'color': Color(0XFFC6F253),
-      'logoColor': Colors.black,
-      'logo': AssetRes.icMasterCard,
-    },
-    {
-      'isPrimary': false,
-      'type': 'Credit Card',
-      'number': '7890',
-      'color': Colors.black,
-      'logoColor': Color(0XFFC6F253),
-      'logo': AssetRes.icVisaCard,
-    },
+  final List<CardModel> _cards = const [
+    CardModel(
+      isPrimary: true,
+      type: 'Debit Card',
+      numberSuffix: '4568',
+      logoColorValue: 0xFF000000,
+      logoAsset: AssetRes.icMasterCard,
+      backgroundImageAsset: AssetRes.imageMasterCardBg,
+    ),
+    CardModel(
+      isPrimary: false,
+      type: 'Credit Card',
+      numberSuffix: '7890',
+      logoColorValue: 0xFFC6F253,
+      logoAsset: AssetRes.icVisaCard,
+      backgroundImageAsset: AssetRes.imageVisaCardBg,
+    ),
   ];
 
   @override
@@ -260,14 +261,7 @@ class _HomePageState extends State<HomePage> {
               final card = _cards[index];
               return SizedBox(
                 width: 320, // fixed width like real credit card
-                child: _buildCard(
-                  isPrimary: card['isPrimary'],
-                  cardType: card['type'],
-                  cardNumber: card['number'],
-                  cardColor: card['color'],
-                  logoColor: card['logoColor'],
-                  logo: card['logo'],
-                ),
+                child: _buildCard(card: card),
               );
             },
           ),
@@ -276,22 +270,23 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCard({
-    required bool isPrimary,
-    required String cardType,
-    required String cardNumber,
-    required Color cardColor,
-    required Color logoColor,
-    required String logo,
-  }) {
+  Widget _buildCard({required CardModel card}) {
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        color: cardColor,
         borderRadius: BorderRadius.circular(22),
+        color: card.backgroundImageAsset == null
+            ? const Color(0xFF2B2B2B)
+            : null,
+        image: card.backgroundImageAsset != null
+            ? DecorationImage(
+                image: AssetImage(card.backgroundImageAsset!),
+                fit: BoxFit.cover,
+              )
+            : null,
         boxShadow: [
           BoxShadow(
-            color: cardColor.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.15),
             spreadRadius: 1,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -311,10 +306,10 @@ class _HomePageState extends State<HomePage> {
                   style: TextStyle(
                     fontSize: 42,
                     fontWeight: FontWeight.bold,
-                    color: logoColor,
+                    color: Color(card.logoColorValue),
                   ),
                 ),
-                Image.asset(logo, height: 40, width: 40),
+                Image.asset(card.logoAsset, height: 40, width: 40),
                 // Container(
                 //   width: 40,
                 //   height: 24,
@@ -343,20 +338,20 @@ class _HomePageState extends State<HomePage> {
                 Column(
                   children: [
                     Text(
-                      cardType,
+                      card.type,
                       style: TextStyle(
                         fontSize: 16,
-                        color: logoColor,
+                        color: Color(card.logoColorValue),
                         fontWeight: FontWeight.normal,
                         fontStyle: FontStyle.normal,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '.... $cardNumber',
+                      '.... ${card.numberSuffix}',
                       style: TextStyle(
                         fontSize: 16,
-                        color: logoColor,
+                        color: Color(card.logoColorValue),
                         fontWeight: FontWeight.bold,
                         fontStyle: FontStyle.normal,
                       ),

@@ -1,5 +1,7 @@
 import 'package:banking_app_flutter/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:banking_app_flutter/models/card_model.dart';
+import 'package:banking_app_flutter/resources/asset_res.dart';
 
 class AddMoneyScreen extends StatefulWidget {
   const AddMoneyScreen({super.key});
@@ -11,28 +13,31 @@ class AddMoneyScreen extends StatefulWidget {
 class _AddMoneyScreenState extends State<AddMoneyScreen> {
   int _selectedCardIndex = 0;
 
-  final List<Map<String, dynamic>> _cards = [
-    {
-      'type': 'Debit card',
-      'number': '4568',
-      'color': Colors.lime,
-      'logo': 'N.',
-      'isSelected': true,
-    },
-    {
-      'type': 'Credit card',
-      'number': '2478',
-      'color': Colors.grey[800]!,
-      'logo': 'VISA',
-      'isSelected': false,
-    },
-    {
-      'type': 'Bank',
-      'number': '1234',
-      'color': Colors.grey[700]!,
-      'logo': 'B',
-      'isSelected': false,
-    },
+  final List<CardModel> _cards = [
+    const CardModel(
+      isPrimary: true,
+      type: 'Debit card',
+      numberSuffix: '4568',
+      logoColorValue: 0xFF000000,
+      logoAsset: AssetRes.icMasterCard,
+      backgroundImageAsset: AssetRes.imageMasterCardBg,
+    ),
+    const CardModel(
+      isPrimary: false,
+      type: 'Credit card',
+      numberSuffix: '2478',
+      logoColorValue: 0xFFC6F253,
+      logoAsset: AssetRes.icVisaCard,
+      backgroundImageAsset: AssetRes.imageVisaCardBg,
+    ),
+    const CardModel(
+      isPrimary: false,
+      type: 'Bank',
+      numberSuffix: '1234',
+      logoColorValue: 0xFFFFFFFF,
+      logoAsset: AssetRes.icVisaCard,
+      backgroundImageAsset: null,
+    ),
   ];
 
   final List<Map<String, dynamic>> _addMoneyOptions = [
@@ -111,9 +116,6 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                   onTap: () {
                     setState(() {
                       _selectedCardIndex = index;
-                      for (int i = 0; i < _cards.length; i++) {
-                        _cards[i]['isSelected'] = i == index;
-                      }
                     });
                   },
                   child: AnimatedContainer(
@@ -122,7 +124,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(
-                        color: card['isSelected']
+                        color: _selectedCardIndex == index
                             ? Colors.black
                             : Colors.transparent,
                         width: 4,
@@ -131,11 +133,19 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                     padding: const EdgeInsets.all(4),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: card['color'],
+                        color: card.backgroundImageAsset == null
+                            ? const Color(0xFF2B2B2B)
+                            : null,
+                        image: card.backgroundImageAsset != null
+                            ? DecorationImage(
+                          image: AssetImage(card.backgroundImageAsset!),
+                          fit: BoxFit.cover,
+                        )
+                            : null,
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: card['color'].withOpacity(0.3),
+                            color: Colors.black.withOpacity(0.15),
                             spreadRadius: 1,
                             blurRadius: 10,
                             offset: const Offset(0, 4),
@@ -143,7 +153,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                         ],
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(12), // Reduced from 16
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -151,41 +161,14 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SelectedIndicator(
-                                  isSelected: card['isSelected'],
+                                  isSelected: _selectedCardIndex == index,
                                 ),
-                                if (card['type'] == 'Debit card')
-                                  Container(
-                                    width: 40,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        'MC',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                else if (card['type'] == 'Credit card')
-                                  const Text(
-                                    'VISA',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                Image.asset(card.logoAsset, height: 28),
                               ],
                             ),
                             const Spacer(),
                             Text(
-                              card['type'],
+                              card.type,
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.white,
@@ -194,7 +177,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                             ),
                             const SizedBox(height: 4),
                             Text(
-                              '.... ${card['number']}',
+                              '.... ${card.numberSuffix}',
                               style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -312,9 +295,9 @@ class SelectedIndicator extends StatelessWidget {
       height: 18,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: isSelected ? Colors.black : Colors.white,
+        color: isSelected ? Color(0XFFFF9800) : Colors.white,
         border: isSelected
-            ? Border.all(width: 2, color: Colors.black)
+            ? Border.all(width: 2, color: Color(0XFFFF9800))
             : Border.all(width: 1, color: Colors.white),
       ),
       child: isSelected
