@@ -68,7 +68,11 @@ class _ProfilePageState extends State<ProfilePage> {
             child: ClipOval(
               child: Container(
                 color: Colors.grey[300],
-                child: const Icon(Icons.person, size: 60, color: Colors.grey),
+                child: Image.network(
+                  'https://randomuser.me/api/portraits/men/78.jpg',
+                  height: 60,
+                  width: 60,
+                ),
               ),
             ),
           ),
@@ -373,10 +377,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             child: const Text(
               'Sign Out',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
           ),
         ),
@@ -427,26 +428,17 @@ class _ProfilePageState extends State<ProfilePage> {
                   const SizedBox(height: 4),
                   Text(
                     subtitle,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[600],
-                    ),
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ],
               ),
             ),
-            Icon(
-              Icons.chevron_right,
-              color: Colors.grey[400],
-              size: 24,
-            ),
+            Icon(Icons.chevron_right, color: Colors.grey[400], size: 24),
           ],
         ),
       ),
     );
   }
-
-
 
   void _editProfilePicture() {
     // Handle edit profile picture functionality
@@ -513,10 +505,10 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('Security & Privacy'),
           content: const Text(
             'Here you can:\n'
-                '• Change your password\n'
-                '• Enable two-factor authentication\n'
-                '• Manage privacy settings\n'
-                '• View login history',
+            '• Change your password\n'
+            '• Enable two-factor authentication\n'
+            '• Manage privacy settings\n'
+            '• View login history',
           ),
           actions: [
             TextButton(
@@ -537,10 +529,10 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('Billing & Subscription'),
           content: const Text(
             'Subscription Details:\n'
-                '• Plan: Premium Plan\n'
-                '• Next billing: February 15, 2025\n'
-                '• Amount: \$9.99/month\n'
-                '• Payment method: •••• 4532',
+            '• Plan: Premium Plan\n'
+            '• Next billing: February 15, 2025\n'
+            '• Amount: \$9.99/month\n'
+            '• Payment method: •••• 4532',
           ),
           actions: [
             TextButton(
@@ -565,10 +557,10 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('Notification Settings'),
           content: const Text(
             'Customize which notifications you receive:\n'
-                '• Push notifications\n'
-                '• Email updates\n'
-                '• SMS alerts\n'
-                '• Marketing communications',
+            '• Push notifications\n'
+            '• Email updates\n'
+            '• SMS alerts\n'
+            '• Marketing communications',
           ),
           actions: [
             TextButton(
@@ -593,10 +585,10 @@ class _ProfilePageState extends State<ProfilePage> {
           title: const Text('Data & Privacy'),
           content: const Text(
             'Manage your data:\n'
-                '• Download your data\n'
-                '• Delete account\n'
-                '• Privacy preferences\n'
-                '• Data sharing settings',
+            '• Download your data\n'
+            '• Delete account\n'
+            '• Privacy preferences\n'
+            '• Data sharing settings',
           ),
           actions: [
             TextButton(
@@ -633,9 +625,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Handle sign out logic
                 _handleSignOut();
               },
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red[700],
-              ),
+              style: TextButton.styleFrom(foregroundColor: Colors.red[700]),
               child: const Text('Sign Out'),
             ),
           ],
